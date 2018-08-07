@@ -54,5 +54,5 @@ config :phoenix_discuss, PhoenixDiscuss.Repo,
   username: "postgres",
   password: "postgres",
   database: "phoenix_discuss_dev",
-  hostname: "localhost",
+  hostname: "172.17.0.2",
   pool_size: 10
