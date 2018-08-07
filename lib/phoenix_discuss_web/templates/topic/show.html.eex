@@ -1,9 +1,11 @@
 <h5><%= @topic.title %></h5>
 
-<div class="input-field">
-  <textarea class="materialize-textarea" id="commentContent"></textarea>
-  <button class="btn" id="addComment">Add Comment</button>
-</div>
+<%= if @conn.assigns.user do %>
+  <div class="input-field">
+    <textarea class="materialize-textarea" id="commentContent"></textarea>
+    <button class="btn" id="addComment">Add Comment</button>
+  </div>
+<% end %>
 
 <ul class="collection" id="commentsList"></ul>
 

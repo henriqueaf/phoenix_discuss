@@ -55,6 +55,13 @@ defmodule PhoenixDiscuss.Discussions do
     |> Repo.insert()
   end
 
+  def create_topic_with_user(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:topics)
+    |> Topic.changeset(attrs)
+    |> Repo.insert()
+  end
+
   @doc """
   Updates a topic.
 

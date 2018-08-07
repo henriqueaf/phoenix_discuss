@@ -51,7 +51,8 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
-socket.connect()
+if (window.userToken)
+  socket.connect()
 
 const createSocket = (topicId) => {
   // Now that you are connected, you can join channels with a topic:
@@ -64,12 +65,12 @@ const createSocket = (topicId) => {
 
   channel.on(`comments:${topicId}:new`, renderComment);
 
-  document.getElementById('addComment').addEventListener('click', (e) => {
-    const commentTextAreaDOM = document.getElementById('commentContent');
-    const content = commentTextAreaDOM.value;
+  $('#addComment').click((e) => {
+    const $commentTextArea = $('#commentContent');
+    const content = $commentTextArea.val();
 
     channel.push('comment:add', { content: content })
-      .receive("ok", (msg) => commentTextAreaDOM.value = '')
+      .receive("ok", (msg) => $commentTextArea.val(''))
       .receive("error", (reasons) => console.log("create failed", reasons) )
       .receive("timeout", () => console.log("Networking issue...") );
   });
@@ -77,13 +78,13 @@ const createSocket = (topicId) => {
 
 const renderComments = (comments) => {
   const renderedComments = comments.map((comment) => commentTemplate(comment));
-  document.getElementById('commentsList').innerHTML = renderedComments.join('');
+  $('#commentsList').html( renderedComments.join('') );
 }
 
 const renderComment = ({ comment }) => {
   const renderedComment = commentTemplate(comment);
 
-  document.getElementById('commentsList').innerHTML += renderedComment;
+  $('#commentsList').append( renderedComment );
 }
 
 const commentTemplate = (comment) => {
